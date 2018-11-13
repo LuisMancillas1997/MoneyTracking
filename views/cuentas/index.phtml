@@ -1,0 +1,35 @@
+<h3 style="text-align:center">Lista de cuentas</h3></div>
+</div>
+</br>
+<div class="container">
+<div class="col-md-7 text-right">
+    <a href="<?php echo APP_URL . "cuentas/agregar"; ?>">
+         <button class="btn btn-sm btn-success">Agregar cuenta</button>
+    </a>
+</div>
+</div>
+<div class="col-md-12 mg-top-10">
+        <table border="1" class="table table-bordered table-striped text-center">
+            <tr style="text-align:center">
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Accion</th>
+        </tr>
+        <?php foreach ($this->cuentas as $cuenta): ?>
+            <tr>
+                <td><?php echo $cuenta["id"]; ?></td>
+                <td><?php echo $cuenta["name"]; ?></td>
+                <td>
+                    <a href="<?php echo APP_URL . "cuentas/editar/" . $cuenta["id"]; ?>">
+                        <button class="btn btn-sm btn-primary">Editar</button>
+                    </a> |
+                    <a href="<?php echo APP_URL . "cuentas/eliminar/" . $cuenta["id"]; ?>">
+                        <button class="btn btn-sm btn-danger">Eliminar</button>
+                    </a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+</div>
+</div>
+</div>

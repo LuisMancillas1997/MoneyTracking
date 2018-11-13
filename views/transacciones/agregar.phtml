@@ -1,0 +1,43 @@
+<h3 style="text-align:center">Agregar transaccion</h3>
+    <div class="container">
+    <div class="col-sm-4 col-sm-offset-4">
+        <form action="<?php echo APP_URL . "transacciones/agregar"; ?>" method="POST">
+            <p>
+                <label for="account_id">Cuenta</label>
+                <select name="account_id" class="form-control">
+                    <?php foreach ($this->cuentas as $cuenta) { ?>
+                        <option value="<?php echo $cuenta["id"]; ?>">
+                            <?php echo $cuenta["name"]; ?></option>
+                    <?php } ?>
+                </select>
+            </p>
+            <p>
+                <label for="category_id">Categoria</label>
+                <select name="category_id" class="form-control">
+                    <?php foreach ($this->categorias as $categoria) { ?>
+                        <option value="<?php echo $categoria["id"]; ?>">
+                            <?php echo $categoria["name"]; ?></option>
+                    <?php } ?>
+                </select>
+            </p>
+
+            <p>
+                <label for="descripcion">Descripcion</label>
+                <textarea name="description" class="form-control"></textarea>
+            </p>
+
+            <p>
+                <label for="fecha">Fecha</label>
+                <input type="date" name="date" value="<?php echo date("Y-m-d"); ?>" class="form-control">
+            </p>
+            <p>
+                <label for="monto">Monto</label>
+                <input name="amount" class="form-control">
+            </p>
+            <p>
+            <input class="btn btn-sm btn-success" type="submit" value="Guardar transacción">
+            </p>
+        </form>
+    </div>
+    <div class="col-sm-6"></div>
+</div>

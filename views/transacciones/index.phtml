@@ -1,0 +1,110 @@
+<h3 style="text-align:center">Lista de transacciones</h3>
+</div>
+</br>
+    <div class="col-md-6 text-right">
+    <a href="<?php echo APP_URL . "transacciones/agregar";?>">
+      <button class="btn btn-sm btn-success">Agregar transaccion</button>
+  </a>
+</div>
+<div class="col-md-12 mg-top-10">
+        <table border="1" class="table table-bordered table-striped text-center">
+                <tr style="text-align:center">
+        <tr>
+            <th>ID</th>
+            <th>Cuenta</th>
+            <th>Categoria</th>
+            <th>Descripción</th>
+            <th>Fecha</th>
+            <th>Monto</th>
+            <th>Acción</th>
+        </tr>
+        <?php foreach ($this->transaccion as $transaccion): ?>
+            <tr>
+                <td><?php echo $transaccion["id"]; ?></td>
+                <td><?php echo $transaccion["account"]; ?></td>
+                <td><?php echo $transaccion["category"]; ?></td>
+                <td><?php echo $transaccion["description"]; ?></td>
+                <td><?php
+                    $date = date_create($transaccion["date"]);
+                    echo date_format($date, 'd/m/Y');
+                    ?>
+                </td>
+
+                <td>
+                    <?php
+                    if ($transaccion["amount"] < 0) {
+                        $cambioSigno = $transaccion["amount"] * -1;
+                        $formattedNum = number_format($cambioSigno, 2);
+                        echo '<span class="label label-danger">' . "&nbsp;&nbsp;-$ &nbsp;" . $formattedNum . '</span>';
+                    } else {
+                        $formattedNum = number_format($transaccion["amount"], 2);
+                        echo '<span class="label label-success">' . "&nbsp;&nbsp;$ &nbsp;" . $formattedNum . '</span>';
+                    }
+                    ?>
+                </td>
+
+                <td>
+                    <a href="<?php echo APP_URL . "transacciones/editar/" . $transaccion["id"]; ?>">
+                        <span class="glyphicon glyphicon-edit"> </span>
+                    </a> |
+                    <a href="<?php echo APP_URL . "transacciones/eliminar/" . $transaccion["id"]; ?>">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        <?php
+        $suma = 0;
+        $suma2 = 0;
+        foreach ($this->transaccion as $transaccion) {
+            $cambioSigno = $transaccion["amount"] * -1;
+            if ($cambioSigno < 0) {
+                $suma += $cambioSigno;
+
+            } else {
+                $suma2 += $cambioSigno;
+            }
+        }
+        ?>
+        <tr>
+            <th>Ingresos</th>
+            <th>Egresos</th>
+            <th>Balance</th>
+        </tr>
+        <td><?php
+            $formattedNum = number_format($suma * -1, 2);
+            echo
+                '<span class="label label-success">'
+                . "$ &nbsp;" . $formattedNum . '</span>';
+            ?>
+        </td>
+        <td>
+            <?php
+            $formattedNum = number_format($suma2, 2);
+            echo
+                '<span class="label label-danger">'
+                . "-$ &nbsp;" . $formattedNum . '</span>';
+            ?>
+        </td>
+        <td>
+            <?php
+            $balance = ($suma * -1) + ($suma2 * -1);
+            if ($balance < 0) {
+                $formattedNum = number_format($balance * -1, 2);
+                echo
+                    '<span class="label label-danger">'
+                    . "-$ &nbsp;" . $formattedNum . '</span>';
+            } else {
+                $formattedNum = number_format($balance * 1, 2);
+                echo
+                    '<span class="label label-success">'
+                    . "$ &nbsp;" . $formattedNum . '</span>';
+            }
+            ?>
+        </td>
+    </table>
+</div>
+</div>
+</tr>
+</table>
+</div>
